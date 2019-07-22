@@ -44,7 +44,7 @@
 
 #include "SoftapController.h"
 #include <dirent.h>
-
+#include <netdFix/issue41.c>
 using android::base::StringPrintf;
 using android::base::WriteStringToFile;
 
