@@ -164,9 +164,9 @@ int SoftapController::startSoftap(bool global_ctrl_iface, SocketClient *socketCl
         return ResponseCode::SoftapStatusResult;
     }
 
-    if (ensure_entropy_file_exists() < 0) {
-        ALOGE("Wi-Fi entropy file was not created");
-    }
+    //if (ensure_entropy_file_exists() < 0) {
+     //   ALOGE("Wi-Fi entropy file was not created");
+    //}
 
     if ((pid = fork()) < 0) {
         ALOGE("fork failed (%s)", strerror(errno));
@@ -174,15 +174,15 @@ int SoftapController::startSoftap(bool global_ctrl_iface, SocketClient *socketCl
     }
 
     if (!pid) {
-        ensure_entropy_file_exists();
+        //ensure_entropy_file_exists();
         if (global_ctrl_iface) {
             ret = execl(HOSTAPD_BIN_FILE, HOSTAPD_BIN_FILE,
-                        "-e", WIFI_ENTROPY_FILE, "-ddd",
+                        "-e", 0, "-ddd",
                         "-g", WIFI_HOSTAPD_GLOBAL_CTRL_IFACE,
                         HOSTAPD_CONF_FILE, (char *)NULL);
         } else {
             ret = execl(HOSTAPD_BIN_FILE, HOSTAPD_BIN_FILE,
-                        "-e", WIFI_ENTROPY_FILE, HOSTAPD_CONF_FILE,
+                        "-e", 0, HOSTAPD_CONF_FILE,
                         (char *)NULL);
         }
         if (ret) {
